@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delayed - A Short Film</title>
+    <meta name="description" content="A mysterious short film about a commuter eternally waiting for a delayed MBTA train.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 72px;
+            color: #ff6b00;
+            text-shadow: 0 0 30px rgba(255, 107, 0, 0.5);
+            letter-spacing: 15px;
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .tagline {
+            font-size: 20px;
+            color: #999;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1920px;
+            margin: 0 auto 40px;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .info {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .info h2 {
+            font-size: 24px;
+            color: #ff6b00;
+            margin-bottom: 15px;
+        }
+
+        .info p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #b0b0b0;
+            margin-bottom: 10px;
+        }
+
+        .credits {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: rgba(255, 107, 0, 0.1);
+            border: 2px solid #ff6b00;
+            color: #ff6b00;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 107, 0, 0.2);
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
+                letter-spacing: 8px;
+            }
+
+            .tagline {
+                font-size: 16px;
+            }
+
+            .info h2 {
+                font-size: 20px;
+            }
+
+            .info p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>DELAYED</h1>
+            <p class="tagline">Some trains never arrive</p>
+        </header>
+
+        <div class="video-wrapper">
+            <video controls preload="metadata" poster="poster.jpg">
+                <source src="delayed.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="info">
+            <h2>About the Film</h2>
+            <p>
+                A tired commuter waits on a late-night MBTA Orange Line platform at North Station.
+                The delay sign never changes. As time passes, something feels wrong—the platform is too empty,
+                too cold, the posters too old.
+            </p>
+            <p>
+                A janitor reveals the terrible truth: the train has been delayed since 1987.
+                The commuter looks down to discover they're wearing a faded '86 Celtics championship shirt.
+                They don't remember putting it on. They don't remember anything before the platform.
+            </p>
+            <p>
+                Frozen in time at the peak of Boston sports glory, eternally waiting for a train that will never come.
+            </p>
+
+            <div class="credits">
+                <p><strong>Duration:</strong> 45 seconds</p>
+                <p><strong>Format:</strong> Animated Short Film</p>
+                <p><strong>Created with:</strong> Remotion + React</p>
+                <p><strong>Music:</strong> "Signs To Nowhere" by Silverman Sound</p>
+            </div>
+
+            <a href="https://adamlozo.com" class="back-link">← BACK TO ADAMLOZO.COM</a>
+        </div>
+    </div>
+</body>
+</html>
