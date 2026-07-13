@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+*.log
+out/
+# deploy/ has its own git history (already merged into this repo's main)
+deploy/
