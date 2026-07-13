@@ -3,8 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+
     <title>Delayed - A Short Film</title>
     <meta name="description" content="A mysterious short film about a commuter eternally waiting for a delayed MBTA train.">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://delayed.adamlozo.com/">
+    <meta property="og:title" content="Delayed - A Short Film">
+    <meta property="og:description" content="A mysterious short film about a commuter eternally waiting for a delayed MBTA train.">
+    <meta property="og:image" content="https://delayed.adamlozo.com/poster.jpg">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="720">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Delayed - A Short Film">
+    <meta name="twitter:description" content="A mysterious short film about a commuter eternally waiting for a delayed MBTA train.">
+    <meta name="twitter:image" content="https://delayed.adamlozo.com/poster.jpg">
+
     <style>
         * {
             margin: 0;
@@ -13,7 +34,7 @@
         }
 
         body {
-            font-family: Georgia, serif;
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
             background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
             color: #e0e0e0;
             min-height: 100vh;
@@ -34,13 +55,35 @@
             margin-bottom: 40px;
         }
 
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            4% { opacity: 1; }
+            5% { opacity: 0.4; }
+            6% { opacity: 1; }
+            7% { opacity: 0.7; }
+            8% { opacity: 1; }
+            40% { opacity: 1; }
+            41% { opacity: 0.5; }
+            43% { opacity: 1; }
+            71% { opacity: 1; }
+            72% { opacity: 0.8; }
+            74% { opacity: 1; }
+        }
+
+        @keyframes flicker-glow {
+            0%, 100% { text-shadow: 0 0 30px rgba(255, 107, 0, 0.5); }
+            50% { text-shadow: 0 0 18px rgba(255, 107, 0, 0.32); }
+        }
+
         h1 {
+            font-family: 'Special Elite', 'Courier New', monospace;
             font-size: 72px;
             color: #ff6b00;
             text-shadow: 0 0 30px rgba(255, 107, 0, 0.5);
-            letter-spacing: 15px;
+            letter-spacing: 6px;
             margin-bottom: 10px;
             font-weight: normal;
+            animation: flicker 6.3s infinite, flicker-glow 4.7s infinite;
         }
 
         .tagline {
@@ -48,6 +91,33 @@
             color: #999;
             font-style: italic;
             letter-spacing: 2px;
+        }
+
+        .delay-counter {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 6px 16px;
+            background: #141414;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+
+        .delay-counter-label {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #ff6b00;
+            opacity: 0.85;
+        }
+
+        .delay-counter-time {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 14px;
+            color: #ff6b00;
+            text-shadow: 0 0 8px rgba(255, 107, 0, 0.6);
+            font-variant-numeric: tabular-nums;
         }
 
         .video-wrapper {
@@ -65,6 +135,37 @@
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background: rgba(10, 10, 10, 0.55);
+            border: 2px solid #ff6b00;
+            color: #ff6b00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            box-shadow: 0 0 30px rgba(255, 107, 0, 0.45);
+        }
+
+        .play-overlay:hover {
+            background: rgba(255, 107, 0, 0.2);
+            box-shadow: 0 0 45px rgba(255, 107, 0, 0.65);
+            transform: translate(-50%, -50%) scale(1.08);
+        }
+
+        .play-overlay.is-hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .info {
@@ -117,7 +218,7 @@
         @media (max-width: 768px) {
             h1 {
                 font-size: 48px;
-                letter-spacing: 8px;
+                letter-spacing: 3px;
             }
 
             .tagline {
@@ -139,13 +240,22 @@
         <header>
             <h1>DELAYED</h1>
             <p class="tagline">Some trains never arrive</p>
+            <div class="delay-counter" title="Some trains never arrive.">
+                <span class="delay-counter-label">DELAYED FOR</span>
+                <span class="delay-counter-time" id="delayCounter">00:00</span>
+            </div>
         </header>
 
         <div class="video-wrapper">
-            <video controls preload="metadata" poster="poster.jpg">
+            <video id="mainVideo" preload="metadata" poster="poster.jpg">
                 <source src="delayed.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
+            <button class="play-overlay" id="playOverlay" type="button" aria-label="Play video">
+                <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+            </button>
         </div>
 
         <div class="info">
@@ -174,5 +284,32 @@
             <a href="https://adamlozo.com" class="back-link">← BACK TO ADAMLOZO.COM</a>
         </div>
     </div>
+
+    <script>
+        (function () {
+            var counterEl = document.getElementById('delayCounter');
+            var seconds = 0;
+            setInterval(function () {
+                seconds += 1;
+                var m = String(Math.floor(seconds / 60)).padStart(2, '0');
+                var s = String(seconds % 60).padStart(2, '0');
+                counterEl.textContent = m + ':' + s;
+            }, 1000);
+
+            var video = document.getElementById('mainVideo');
+            var overlay = document.getElementById('playOverlay');
+
+            function revealNativeControls() {
+                video.setAttribute('controls', '');
+                overlay.classList.add('is-hidden');
+            }
+
+            overlay.addEventListener('click', function () {
+                video.play();
+            });
+
+            video.addEventListener('play', revealNativeControls);
+        })();
+    </script>
 </body>
 </html>
