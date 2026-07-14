@@ -1,8 +1,11 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   Easing,
+  Sequence,
   interpolate,
+  staticFile,
   useCurrentFrame,
 } from "remotion";
 import {
@@ -779,6 +782,13 @@ export const Scene7_TheReveal: React.FC = () => {
       ) : (
         <ReflectionShot />
       )}
+
+      {/* AUDIO: one clean piano note on the reveal beat — SHIRT_CUT, where
+          the faded '86 print first becomes legible. Muted and dreamlike;
+          left to ring and decay naturally. Design V2: "single piano note." */}
+      <Sequence from={SHIRT_CUT}>
+        <Audio src={staticFile("audio/piano-note.mp3")} volume={0.5} />
+      </Sequence>
 
       <ColorGrade mode="cold" />
       <FilmGrain />

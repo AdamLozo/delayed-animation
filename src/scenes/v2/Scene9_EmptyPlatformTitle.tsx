@@ -1,5 +1,12 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Sequence,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { Platform } from "../../components/Platform";
 import { DelaySign } from "../../components/DelaySign";
 import { ColorGrade } from "../../style/ColorGrade";
@@ -56,25 +63,20 @@ export const Scene9_EmptyPlatformTitle: React.FC = () => {
         </div>
       </AbsoluteFill>
 
-      {/* ── AUDIO PLACEHOLDER ─────────────────────────────────────────────
-          Scene is otherwise SILENT (no ambient bed — the silence is the
-          point after Scene 8's swell). One distant train horn, fading:
-          starts at HORN_START (frame 60), gone by HORN_END (frame 120).
-
-          When the asset exists at public/train-horn-distant.mp3, add
-          `Audio, Sequence, staticFile` to the remotion import and uncomment:
-
-          <Sequence from={HORN_START} durationInFrames={HORN_END - HORN_START}>
-            <Audio
-              src={staticFile("train-horn-distant.mp3")}
-              volume={(f) =>
-                interpolate(f, [0, HORN_END - HORN_START], [0.45, 0], {
-                  extrapolateRight: "clamp",
-                })
-              }
-            />
-          </Sequence>
-      ────────────────────────────────────────────────────────────────── */}
+      {/* AUDIO: the scene is otherwise SILENT (no ambient bed — the silence
+          is the point after Scene 8's swell). One distant train horn out of
+          that silence, fading: HORN_START (frame 60) → gone by HORN_END
+          (frame 120). Design V2: "silence; one distant train horn, fading." */}
+      <Sequence from={HORN_START} durationInFrames={HORN_END - HORN_START}>
+        <Audio
+          src={staticFile("audio/train-horn-distant.mp3")}
+          volume={(f) =>
+            interpolate(f, [0, HORN_END - HORN_START], [0.45, 0], {
+              extrapolateRight: "clamp",
+            })
+          }
+        />
+      </Sequence>
 
       <ColorGrade mode="cold" />
 

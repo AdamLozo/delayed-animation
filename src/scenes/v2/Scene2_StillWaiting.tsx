@@ -1,5 +1,11 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { Commuter } from "../../components/Commuter";
 import { Payphone } from "../../components/Payphone";
 import { ColorGrade } from "../../style/ColorGrade";
@@ -129,6 +135,20 @@ export const Scene2_StillWaiting: React.FC = () => {
       {/* Grade: colder than Scene 1 — the temperature is dropping */}
       <ColorGrade mode="cold" intensity={1.12} />
       <FilmGrain opacity={0.06} />
+
+      {/* AUDIO: subtle clock tick under the ambient buzz, unease building
+          across the scene. Design V2: "subtle ticking under the buzz."
+          Looped (asset ~5s) and kept low so it sits beneath the bed. */}
+      <Audio
+        src={staticFile("audio/clock-tick.mp3")}
+        loop
+        volume={(f) =>
+          interpolate(f, [0, SCENE2_DURATION], [0.18, 0.4], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          })
+        }
+      />
     </AbsoluteFill>
   );
 };

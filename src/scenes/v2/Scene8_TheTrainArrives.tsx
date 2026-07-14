@@ -1,9 +1,11 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   Easing,
   Sequence,
   interpolate,
+  staticFile,
   useCurrentFrame,
 } from "remotion";
 import { GhostTrain } from "../../components/GhostTrain";
@@ -232,6 +234,27 @@ export const Scene8_TheTrainArrives: React.FC = () => {
           );
         })()}
       </Sequence>
+
+      {/* AUDIO ── low warm swell under the train's arrival, plus the delay
+          sign's flicker-buzz persisting underneath (same fluorescent-buzz
+          source as the ambient bed / Scene 1, not a new hum). Both kept
+          understated so the visual ambiguity of the ending isn't overpowered.
+          Design V2: "low warm swell; the delay sign's flicker-buzz persists
+          underneath, seeding doubt." */}
+      <Audio
+        src={staticFile("audio/warm-swell.mp3")}
+        volume={(f) =>
+          interpolate(f, [10, 115, 270, 300], [0, 0.42, 0.42, 0], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          })
+        }
+      />
+      <Audio
+        src={staticFile("audio/fluorescent-buzz.mp3")}
+        loop
+        volume={0.16}
+      />
 
       {/* Always-on finish, both modes */}
       <FilmGrain />

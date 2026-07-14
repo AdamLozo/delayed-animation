@@ -4,6 +4,7 @@ import {
   Audio,
   Sequence,
   interpolate,
+  staticFile,
   useCurrentFrame,
 } from "remotion";
 import { Platform } from "../../components/Platform";
@@ -47,7 +48,7 @@ const LOOK_TUNNEL = 395; // leans, looking down the tunnel. Nothing.
  *   2. Replace the null below with  staticFile("audio/train-rush.mp3")
  *      (import staticFile from "remotion")
  * ==========================================================================*/
-const TRAIN_SOUND_SRC: string | null = null; // TODO(audio): staticFile("audio/train-rush.mp3")
+const TRAIN_SOUND_SRC: string | null = staticFile("audio/train-rush.mp3");
 
 export const SCENE3_TRAIN_AUDIO = {
   startFrame: TRAIN_START,

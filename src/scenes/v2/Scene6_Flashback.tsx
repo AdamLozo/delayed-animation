@@ -1,8 +1,11 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
+  Sequence,
   interpolate,
   random,
+  staticFile,
   useCurrentFrame,
 } from "remotion";
 import { Commuter } from "../../components/Commuter";
@@ -432,6 +435,15 @@ export const Scene6_Flashback: React.FC = () => {
           same instance parameters as the cold side so the strobe pattern
           is continuous across the cut. Maximum harshness; do not soften. */}
       <FlickerCut at={SCENE6_CUT_FRAME} durationInFrames={16} harshness={1} />
+
+      {/* AUDIO: warm, full crowd roar — already at full intensity from
+          frame 0 (the memory arrives mid-roar). The Sequence ends at
+          SCENE6_CUT_FRAME, and the cold tail (frame >= cut) renders no
+          audio, so the roar cuts DEAD to silence exactly at the flicker-cut.
+          Design V2: "crowd roar, warm and full → cut to dead room tone." */}
+      <Sequence from={0} durationInFrames={SCENE6_CUT_FRAME}>
+        <Audio src={staticFile("audio/crowd-roar.mp3")} volume={0.85} />
+      </Sequence>
     </AbsoluteFill>
   );
 };
